@@ -7,6 +7,7 @@ public class Pirate : Entity {
 
 	// Use this for initialization
 	void Start () {
+		health = maxHealth;
 		enemyBase = GameObject.FindWithTag ("Base");
 		this.faction = Affiliation.COMPUTER;
 	}

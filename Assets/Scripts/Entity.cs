@@ -7,7 +7,7 @@ using UnityEngine;
  */
 public class Entity : MonoBehaviour {
 	[SerializeField]
-	protected float health;
+	protected float maxHealth;
 	[SerializeField]
 	protected float movementSpeed;
 	[SerializeField]
@@ -17,16 +17,7 @@ public class Entity : MonoBehaviour {
 	[SerializeField]
 	protected Affiliation faction;
 
-	virtual protected void Die() {
-		Debug.Log ("DEAD");
-		GameObject.Destroy (this.gameObject);
-	}
-
-	virtual protected void Attack() {
-	}
-
-	virtual protected void Move() {
-	}
+	protected float health = 0;
 
 	void Update() {
 		if (canMove)
@@ -41,5 +32,21 @@ public class Entity : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		// Need to stub out functions for when something gets hit by a projectile. 
+	}
+
+	virtual protected void Die() {
+		Debug.Log ("DEAD");
+		GameObject.Destroy (this.gameObject);
+	}
+
+	virtual protected void Attack() {
+	}
+
+	virtual protected void Move() {
+	}
+
+	// This gets the normalized health value for fill of the healthbar
+	protected float GetHealthNormalized() {
+		return health / maxHealth;
 	}
 }
