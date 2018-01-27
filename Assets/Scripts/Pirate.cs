@@ -27,11 +27,12 @@ public class Pirate : Entity {
         }
     }
 
+
     protected override void Move ()
 	{
 		if (enemyBase != null && this.transform.position != enemyBase.transform.position) {
 			canMove = true;
-			this.transform.position = Vector2.MoveTowards (this.transform.position, enemyBase.transform.position, movementSpeed);
+			this.transform.position = Vector2.MoveTowards (this.transform.position, nav.Navigate(this.transform.position), movementSpeed);
 		} else {
 			canMove = false;
 		}

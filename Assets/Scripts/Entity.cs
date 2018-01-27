@@ -21,6 +21,7 @@ public class Entity : MonoBehaviour {
 	protected GameObject healthBar;
 
     protected float health = 100;
+	protected Navigator nav;
 
 	void FixedUpdate() {
 		if (canMove) {
@@ -39,6 +40,10 @@ public class Entity : MonoBehaviour {
     {
         return faction;
     }
+
+	public void SetNavigator(Navigator navigator) {
+		this.nav = navigator;
+	}
 
     public void TakeDamage (float damage)
     {
