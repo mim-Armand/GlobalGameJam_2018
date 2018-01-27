@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pirate : Entity {
+    [SerializeField]
+    private GameObject projectile;
+    [SerializeField]
+    private float damage;
 	private GameObject enemyBase;
+    private int count = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -12,7 +17,16 @@ public class Pirate : Entity {
 		this.faction = Affiliation.COMPUTER;
 	}
 
-	protected override void Move ()
+    void OnTriggerEnter2D(Collider2D hitbox)
+    {
+        if (count == 0)
+        {
+            this.Attack(hitbox.gameObject);
+            count++;
+        }
+    }
+
+    protected override void Move ()
 	{
 		if (enemyBase != null && this.transform.position != enemyBase.transform.position) {
 			canMove = true;
@@ -22,6 +36,9 @@ public class Pirate : Entity {
 		}
 	}
 
-	protected override void Attack() {
-	}
+	protected override void Attack(GameObject defender) {
+        Attacks.ShootStart(projectile, this.gameObject, defender, damage);
+    }
+
+
 }
