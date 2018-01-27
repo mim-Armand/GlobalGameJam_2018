@@ -16,4 +16,8 @@ public static class Attacks
         }
         projectile.GetComponent<Projectile>().SetFaction(attacker.GetComponent<Entity>().GetAffiliation()); 
     }
+
+	public static void MeleeAttack(GameObject defender, float damage) {
+		defender.GetComponent<Entity> ().TakeDamage (damage);
+	}
 }

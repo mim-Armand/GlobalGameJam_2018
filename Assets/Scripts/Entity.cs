@@ -19,6 +19,8 @@ public class Entity : MonoBehaviour {
 	protected Affiliation faction;
 	[SerializeField]
 	protected GameObject healthBar;
+	[SerializeField]
+	private float healthBarHeight;
 
     protected float health = 100;
 	protected Navigator nav;
@@ -28,6 +30,7 @@ public class Entity : MonoBehaviour {
 		if (canMove) {
 			Move ();
 			SetProperRotation ();
+			healthBar.transform.position = this.transform.position + new Vector3 (0f, healthBarHeight, 0f);
 		}
 
 		if (health <= 0)
@@ -51,11 +54,12 @@ public class Entity : MonoBehaviour {
     {
         Debug.Log("Entity has launched TakeDamage with " + damage + " damage");
         health -= damage;
-		healthBar.GetComponentInChildren<Image> ().fillAmount = GetHealthNormalized ();
+		healthBar.transform.GetChild(0).transform.GetChild(0).GetComponent<Image> ().fillAmount = GetHealthNormalized ();
         Debug.Log(health);
     }
 	virtual protected void Die() {
 		Debug.Log ("DEAD");
+		GameObject.Destroy (healthBar.gameObject);
 		GameObject.Destroy (this.gameObject);
 	}
 
@@ -72,8 +76,8 @@ public class Entity : MonoBehaviour {
 
 	protected void SetupHealthBar() {
 		healthBar = GameObject.Instantiate (healthBar);
-		healthBar.transform.position = this.transform.position + new Vector3 (0f, .5f, 0f);
-		healthBar.transform.SetParent (this.transform);
+		healthBar.transform.position = this.transform.position + new Vector3 (0f, healthBarHeight, 0f);
+		healthBar.transform.localScale = this.transform.localScale;
 	}
 
 	// this is used to flip around the sprite so the animations look correct
