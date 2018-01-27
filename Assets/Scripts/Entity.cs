@@ -16,10 +16,9 @@ public class Entity : MonoBehaviour {
 	protected bool canMove;
 	[SerializeField]
 	protected Affiliation faction;
+    protected float health = 100;
 
-	protected float health = 0;
-
-	void Update() {
+	void FixedUpdate() {
 		if (canMove)
 			Move();
 
@@ -31,6 +30,17 @@ public class Entity : MonoBehaviour {
 		// Need to stub out functions for when something gets hit by a projectile. 
 	}
 
+    public Affiliation GetAffiliation()
+    {
+        return faction;
+    }
+
+    public void TakeDamage (float damage)
+    {
+        Debug.Log("Entity has launched TakeDamage with " + damage + " damage");
+        health -= damage;
+        Debug.Log(health);
+    }
 	virtual protected void Die() {
 		Debug.Log ("DEAD");
 		GameObject.Destroy (this.gameObject);
@@ -46,4 +56,6 @@ public class Entity : MonoBehaviour {
 	protected float GetHealthNormalized() {
 		return health / maxHealth;
 	}
+    
+
 }
