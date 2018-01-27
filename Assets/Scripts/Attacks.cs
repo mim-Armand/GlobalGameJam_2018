@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attacks
+public static class Attacks
 {
-    public void ShootStart(GameObject projectile, GameObject attacker, GameObject defender)
+    public static void ShootStart(GameObject projectile, GameObject attacker, GameObject defender)
     {
         projectile = GameObject.Instantiate(projectile, attacker.transform);
         Projectile projectilescript = projectile.GetComponent<Projectile>();

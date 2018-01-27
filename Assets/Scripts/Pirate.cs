@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pirate : Entity {
+    [SerializeField]
+    private GameObject projectile;
 	private GameObject enemyBase;
 
 	// Use this for initialization
@@ -11,6 +13,12 @@ public class Pirate : Entity {
 		enemyBase = GameObject.FindWithTag ("Base");
 		this.faction = Affiliation.COMPUTER;
 	}
+
+    void OnCollisionEnter2D(Collision2D hitbox)
+    {
+        Debug.Log("this worked");
+        this.Attack(hitbox.gameObject);
+    }
 
 	protected override void Move ()
 	{
@@ -22,6 +30,7 @@ public class Pirate : Entity {
 		}
 	}
 
-	protected override void Attack() {
+	protected override void Attack(GameObject defender) {
+        Attacks.ShootStart(projectile, this.gameObject, defender);
 	}
 }

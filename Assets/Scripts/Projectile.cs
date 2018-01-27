@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
     private Transform projectileclass_heading;
-    private float movementspeed_factor = .1f;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +20,9 @@ public class Projectile : MonoBehaviour {
         if (projectileclass_heading != null && projectileclass_heading.position != this.transform.position)
         {
             this.transform.LookAt(projectileclass_heading);
-            this.transform.position = this.transform.position + new Vector3(0, .01f);
+            this.transform.position = this.transform.position + new Vector3(0, .2f);
         }
+
+        
      }
 }

@@ -23,9 +23,6 @@ public class Entity : MonoBehaviour {
 		if (canMove)
 			Move();
 
-		if (canAttack)
-			Attack();
-
 		if (health <= 0)
 			Die();
 	}
@@ -39,7 +36,7 @@ public class Entity : MonoBehaviour {
 		GameObject.Destroy (this.gameObject);
 	}
 
-	virtual protected void Attack() {
+	virtual protected void Attack(GameObject defender) {
 	}
 
 	virtual protected void Move() {
