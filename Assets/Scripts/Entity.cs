@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 /*
@@ -16,11 +17,15 @@ public class Entity : MonoBehaviour {
 	protected bool canMove;
 	[SerializeField]
 	protected Affiliation faction;
+	[SerializeField]
+	protected GameObject healthBar;
+
     protected float health = 100;
 
 	void FixedUpdate() {
-		if (canMove)
-			Move();
+		if (canMove) {
+			Move ();
+		}
 
 		if (health <= 0)
 			Die();
@@ -39,6 +44,7 @@ public class Entity : MonoBehaviour {
     {
         Debug.Log("Entity has launched TakeDamage with " + damage + " damage");
         health -= damage;
+		healthBar.GetComponentInChildren<Image> ().fillAmount = GetHealthNormalized ();
         Debug.Log(health);
     }
 	virtual protected void Die() {
@@ -56,6 +62,10 @@ public class Entity : MonoBehaviour {
 	protected float GetHealthNormalized() {
 		return health / maxHealth;
 	}
-    
 
+	protected void SetupHealthBar() {
+		healthBar = GameObject.Instantiate (healthBar);
+		healthBar.transform.position = this.transform.position + new Vector3 (0f, .5f, 0f);
+		healthBar.transform.SetParent (this.transform);
+	}
 }

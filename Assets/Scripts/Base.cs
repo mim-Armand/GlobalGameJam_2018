@@ -6,7 +6,8 @@ public class Base : Entity {
 
 	// Use this for initialization
 	void Start () {
-        health = maxHealth;
+		health = maxHealth;
+		this.SetupHealthBar ();
 	}
     
 	// Update is called once per frame

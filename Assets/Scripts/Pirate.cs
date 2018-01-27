@@ -15,6 +15,7 @@ public class Pirate : Entity {
 		health = maxHealth;
 		enemyBase = GameObject.FindWithTag ("Base");
 		this.faction = Affiliation.COMPUTER;
+		this.SetupHealthBar ();
 	}
 
     void OnTriggerEnter2D(Collider2D hitbox)
