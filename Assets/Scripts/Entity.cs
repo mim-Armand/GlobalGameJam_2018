@@ -22,10 +22,12 @@ public class Entity : MonoBehaviour {
 
     protected float health = 100;
 	protected Navigator nav;
+	protected Vector2 lastPoint;
 
 	void FixedUpdate() {
 		if (canMove) {
 			Move ();
+			SetProperRotation ();
 		}
 
 		if (health <= 0)
@@ -72,5 +74,17 @@ public class Entity : MonoBehaviour {
 		healthBar = GameObject.Instantiate (healthBar);
 		healthBar.transform.position = this.transform.position + new Vector3 (0f, .5f, 0f);
 		healthBar.transform.SetParent (this.transform);
+	}
+
+	// this is used to flip around the sprite so the animations look correct
+	private void SetProperRotation() {
+		//it means we are going left 
+		if (this.transform.position.x < lastPoint.x) {
+			this.transform.rotation = new Quaternion (0f, 180f, 0f, 0f);
+		} else {
+			this.transform.rotation = new Quaternion (0f, 0f, 0f, 0f);
+		}
+
+		lastPoint = this.transform.position;
 	}
 }
