@@ -21,11 +21,6 @@ public class Pirate : Entity {
 		}
 	}
 
-	protected override void Die() {
-		Debug.Log ("DEAD");
-		GameObject.Destroy (this.gameObject);
-	}
-
 	protected override void Attack() {
 	}
 }

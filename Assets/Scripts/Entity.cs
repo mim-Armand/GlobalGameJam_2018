@@ -38,4 +38,8 @@ public class Entity : MonoBehaviour {
 		if (health <= 0)
 			Die();
 	}
+
+	void OnCollisionEnter(Collision collision) {
+		// Need to stub out functions for when something gets hit by a projectile. 
+	}
 }
