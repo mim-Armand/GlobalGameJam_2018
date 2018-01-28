@@ -24,6 +24,7 @@ public static class Attacks
 		Debug.Log ("AOE spawned");
 		aoe = GameObject.Instantiate(aoe);
 		aoe.transform.position = attacker.transform.position;
+		aoe.transform.SetParent (attacker.transform);
 		AOE component = aoe.GetComponent<AOE> ();
 		component.SetDamage(damage);
 	}
