@@ -6,13 +6,14 @@ using UnityEngine;
 public class PlaceTower : MonoBehaviour {
 
     public Color hoverColor;
+	public float yAdjust;
     private GameObject tower;
-    private Renderer rend;
+	private SpriteRenderer rend;
     private Color startColor;
 
     private void Start()
     {
-        rend = GetComponent<Renderer>();
+		rend = GetComponent<SpriteRenderer>();
         startColor = rend.material.color;
     }
 
@@ -25,7 +26,7 @@ public class PlaceTower : MonoBehaviour {
         }
 
         GameObject towerToBuild = BuildManager.instance.GetTowerToBuild();
-        tower = (GameObject)Instantiate(towerToBuild, transform.position, transform.rotation);
+		tower = (GameObject)Instantiate(towerToBuild, transform.position + new Vector3(0f, yAdjust, 0f), transform.rotation);
     }
 
     private void OnMouseEnter()
