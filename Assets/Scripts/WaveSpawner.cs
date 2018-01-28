@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour {
 	public GameObject piratePrefab;
+	public GameObject shipPrefab;
     public float timeBetweenWaves = 10f;
     private float countdown = 2f;
     public Text waveCountdownText;
@@ -17,8 +18,13 @@ public class WaveSpawner : MonoBehaviour {
     {
         if(countdown <= 0f)
         {
-            StartCoroutine(SpawnWave()) ; //called here
-            countdown = timeBetweenWaves;
+			//spawn pirate ship every 10th wave
+			if ((waveNumber + 1) % 10 == 0) {
+				SpawnPirateShip ();
+			} else {
+				StartCoroutine (SpawnWave ()); //called here
+			}
+			countdown = timeBetweenWaves;
         }
         countdown -= Time.deltaTime;
         waveCountdownText.text = Mathf.Floor(countdown).ToString();
@@ -45,5 +51,11 @@ public class WaveSpawner : MonoBehaviour {
 		spawnedObject.GetComponent<Entity> ().SetNavigator (new Navigator (navPoints));
     }
 
-
+	void SpawnPirateShip() {
+		waveNumber++;
+		GameObject spawnedObject = GameObject.Instantiate (shipPrefab);
+		// we only need to set the position since the thing spawned will take care of that
+		spawnedObject.transform.position = this.transform.position;
+		spawnedObject.GetComponent<Entity> ().SetNavigator (new Navigator (navPoints));
+	}
 }
