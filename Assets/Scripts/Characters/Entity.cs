@@ -12,8 +12,6 @@ public class Entity : MonoBehaviour {
 	[SerializeField]
 	protected float movementSpeed;
 	[SerializeField]
-	protected bool canAttack;
-	[SerializeField]
 	protected bool canMove;
 	[SerializeField]
 	protected Affiliation faction;
@@ -23,10 +21,16 @@ public class Entity : MonoBehaviour {
 	private float healthBarHeight;
 	[SerializeField]
 	private AudioSource deathSounds;
+	[SerializeField]
+	protected float attackDelaySeconds;
+	[SerializeField]
+	protected bool canAttack;
 
     protected float health = 100;
 	protected Navigator nav;
 	protected Vector2 lastPoint;
+
+	protected float attackTimer = 0.0f;
 
 	void FixedUpdate() {
 		if (canMove) {
@@ -34,6 +38,11 @@ public class Entity : MonoBehaviour {
 			SetProperRotation ();
 			healthBar.transform.position = this.transform.position + new Vector3 (0f, healthBarHeight, -.01f);
 		}
+			
+		if (canAttack && attackTimer > 0.0) {
+			attackTimer -= Time.fixedDeltaTime;
+			//Debug.Log (attackTimer + "Entity");
+		} 
 
 		if (health <= 0)
 			Die();
@@ -54,14 +63,13 @@ public class Entity : MonoBehaviour {
 
     public void TakeDamage (float damage)
     {
-        Debug.Log("Entity has launched TakeDamage with " + damage + " damage");
         health -= damage;
 		healthBar.transform.GetChild(0).transform.GetChild(0).GetComponent<Image> ().fillAmount = GetHealthNormalized ();
-        Debug.Log(health);
     }
 	virtual protected void Die() {
+		this.canMove = false;
 		Debug.Log ("DEAD");
-		StartCoroutine(DoDeathSounds()) ;
+		DoDeathSounds ();
 	}
 
 	// This is different from death and caused by when a unit reaches the player base
@@ -100,12 +108,12 @@ public class Entity : MonoBehaviour {
 		lastPoint = this.transform.position;
 	}
 
-	private IEnumerator DoDeathSounds()
+	private void DoDeathSounds()
 	{
-		if(deathSounds != null)
+		if (deathSounds != null) {
 			deathSounds.Play ();
-		
-		yield return new WaitForSeconds(3.0f);
+			Debug.Log ("printing death");
+		}
 		GameObject.Destroy (healthBar.gameObject);
 		GameObject.Destroy (this.gameObject);
 	}

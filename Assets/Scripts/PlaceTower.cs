@@ -20,6 +20,7 @@ public class PlaceTower : MonoBehaviour {
         startColor = rend.material.color;
 
         buildManager = BuildManager.instance;
+		Debug.Log (buildManager.gameObject.name);
     }
 
     public Vector3 GetBuildPosition()
@@ -37,11 +38,12 @@ public class PlaceTower : MonoBehaviour {
         {
             return;
         }
-        if (tower != null)
-        {
-            Debug.Log("Can't build there");
-            return;
-        }
+		//works without it!
+        //if (tower != null)
+        //{
+           // Debug.Log("Can't build there");
+           // return;
+       // }
 
         buildManager.BuildTowerOn(this);
     }
