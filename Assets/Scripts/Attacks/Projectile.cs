@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
+	[SerializeField]
+	private float speed = 0.02f;
     private Transform projectileclass_heading;
     private float damage;
     protected Affiliation faction;
@@ -28,7 +30,7 @@ public class Projectile : MonoBehaviour {
     {
         if (projectileclass_heading != null && projectileclass_heading.position != this.transform.position)
         {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, projectileclass_heading.position, .02f);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, projectileclass_heading.position, speed);
         }
 
 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Pirate : Entity {
     [SerializeField]
-    private GameObject projectile;
-    [SerializeField]
     private float damage;
 	private GameObject enemyBase;
     private int count = 0;
