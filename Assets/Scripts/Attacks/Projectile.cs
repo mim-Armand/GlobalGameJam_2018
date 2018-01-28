@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour {
 	private float speed = 0.02f;
     private Transform projectileclass_heading;
     private float damage;
+	[SerializeField]
     protected Affiliation faction;
 
 	// Use this for initialization
@@ -43,7 +44,8 @@ public class Projectile : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D hitbox)
     {
-        Debug.Log("Projectile has launched OnCollisionEnter2D " + hitbox.gameObject.name);
+        Debug.Log("Projectile has launched OnCollisionEnter2D " + hitbox.gameObject.name + "for damage " + damage);
+		Debug.Log (this.faction + " verses " + hitbox.gameObject.GetComponent<Entity> ().GetAffiliation ());
         if (hitbox.gameObject.GetComponent<Entity>().GetAffiliation() != this.faction)
             {
                 hitbox.gameObject.GetComponent<Entity>().TakeDamage(damage);

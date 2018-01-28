@@ -5,6 +5,8 @@ using UnityEngine;
 public class PirateShip : Entity {
 	[SerializeField]
 	private float damage;
+	[SerializeField]
+	private GameObject projectile;
 	private GameObject enemyBase;
 	private int count = 0;
 
@@ -30,6 +32,23 @@ public class PirateShip : Entity {
 	void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject.tag == "Base") {
 			this.Despawn ();
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		Debug.Log ("In trigger");
+		if (this.attackTimer <= 0) {
+			//make sure the attack was successful
+			AttackCycle (collider.gameObject);
+		}
+	}
+
+	private void AttackCycle(GameObject obj) {
+		Entity entity = obj.GetComponent<Entity> ();
+		if (entity != null && entity.GetAffiliation () != this.faction) {
+			attackTimer = attackDelaySeconds;
+			Debug.Log ("in here in ship");
+			Attacks.ShootStart (projectile, this.transform.GetChild(0).gameObject, entity.gameObject, damage);
 		}
 	}
 }

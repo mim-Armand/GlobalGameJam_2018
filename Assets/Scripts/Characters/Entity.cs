@@ -63,7 +63,6 @@ public class Entity : MonoBehaviour {
 
     public void TakeDamage (float damage)
     {
-		Debug.Log(this.gameObject.name + "has launched TakeDamage with " + damage + " damage");
         health -= damage;
 		healthBar.transform.GetChild(0).transform.GetChild(0).GetComponent<Image> ().fillAmount = GetHealthNormalized ();
     }

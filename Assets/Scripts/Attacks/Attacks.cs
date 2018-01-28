@@ -7,14 +7,13 @@ public static class Attacks
     public static void ShootStart(GameObject projectile, GameObject attacker, GameObject defender, float damage)
     {
         projectile = GameObject.Instantiate(projectile);
+		projectile.GetComponent<Projectile>().SetDamage(damage);
         projectile.transform.position = Vector2.Lerp(attacker.transform.position, defender.transform.position, .3f);
-        projectile.GetComponent<Projectile>().SetDamage(damage);
         Projectile projectilescript = projectile.GetComponent<Projectile>();
         if (projectilescript != null)
         {
             projectilescript.SetMovementDirection(defender.transform);
         }
-        projectile.GetComponent<Projectile>().SetFaction(attacker.GetComponent<Entity>().GetAffiliation()); 
     }
 
 	public static void MeleeAttack(GameObject defender, float damage) {
@@ -27,8 +26,5 @@ public static class Attacks
 		aoe.transform.position = attacker.transform.position;
 		AOE component = aoe.GetComponent<AOE> ();
 		component.SetDamage(damage);
-		component.SetFaction(attacker.GetComponent<Entity>().GetAffiliation());
-	
-		 
 	}
 }
