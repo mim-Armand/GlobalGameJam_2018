@@ -18,21 +18,11 @@ public class Pirate : Entity {
 		this.SetupHealthBar ();
 	}
 
-	/*
-    void OnTriggerEnter2D(Collider2D hitbox)
-    {
-        if (count == 0)
-        {
-            this.Attack(hitbox.gameObject);
-            count++;
-        }
-    }
-    */
-
 	void OnCollisionEnter2D(Collision2D collision) {
-		Debug.Log ("hello");
-		this.Attack (collision.gameObject);
-		Die ();
+		if (collision.gameObject.tag == "Base") {
+			this.Attack (collision.gameObject);
+			this.Despawn ();
+		}
 	}
 
 
@@ -47,7 +37,6 @@ public class Pirate : Entity {
 	}
 
 	protected override void Attack(GameObject defender) {
-        //Attacks.ShootStart(projectile, this.gameObject, defender, damage);
 		Attacks.MeleeAttack(defender, damage);
     }
 
