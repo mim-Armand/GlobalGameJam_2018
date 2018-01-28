@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TV : Entity {
+public class TV : TowerBlueprint {
 	[SerializeField]
 	private GameObject projectile;
 	[SerializeField]
@@ -13,6 +13,8 @@ public class TV : Entity {
 		health = maxHealth;
 		this.faction = Affiliation.PLAYER;
 		this.SetupHealthBar ();
+		this.cost = 300;
+		this.prefab = this.gameObject;
 	}
 
 	// Update is called once per frame

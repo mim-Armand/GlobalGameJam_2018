@@ -26,8 +26,11 @@ public class Spawner : MonoBehaviour {
 				}
 				countdown = timeBetweenWaves;
 			}
-			countdown -= Time.deltaTime;
-			waveCountdownText.text = Mathf.Floor(countdown).ToString();
+			
+		countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+
+		waveCountdownText.text = string.Format("{0:00.00}", countdown);
+		countdown -= Time.deltaTime;
 		}
 
 		IEnumerator SpawnWave() //will be called when countdown is 0 to indicate another enemy wave is coming

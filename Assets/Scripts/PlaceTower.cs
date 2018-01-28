@@ -20,6 +20,7 @@ public class PlaceTower : MonoBehaviour {
         startColor = rend.material.color;
 
         buildManager = BuildManager.instance;
+		Debug.Log (buildManager.gameObject.name);
     }
 
     public Vector3 GetBuildPosition()
