@@ -7,8 +7,7 @@ public class Spawn : MonoBehaviour {
 	private float seconds;
 	[SerializeField]
 	private GameObject enemy;
-	[SerializeField]
-	private GameObject[] navPoints;
+
 	private float lastSpawnTime = 0;
 	private bool canSpawn = false;
 
@@ -31,9 +30,6 @@ public class Spawn : MonoBehaviour {
 	}
 
 	private void GenerateEntity() {
-		GameObject spawnedObject = GameObject.Instantiate (enemy);
-		// we only need to set the position since the thing spawned will take care of that
-		spawnedObject.transform.position = this.transform.position;
-		spawnedObject.GetComponent<Entity> ().SetNavigator (new Navigator (navPoints));
+		
 	}
 }
