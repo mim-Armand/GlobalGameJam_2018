@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class WaveSpawner : MonoBehaviour {
+public class Spawner : MonoBehaviour {
 	public GameObject piratePrefab;
 	public GameObject shipPrefab;
     public float timeBetweenWaves = 10f;
