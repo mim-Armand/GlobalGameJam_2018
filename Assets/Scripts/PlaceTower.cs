@@ -7,26 +7,43 @@ using UnityEngine.EventSystems;
 public class PlaceTower : MonoBehaviour {
 
     public Color hoverColor;
-    private GameObject tower;
+    public Color notEnoughMoneyColor;
+    public GameObject tower;
     private Renderer rend;
     private Color startColor;
+    public Vector3 positionOffSet;
+    BuildManager buildManager;
 
-    private void Start()
+    void Start()
     {
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
+
+        buildManager = BuildManager.instance;
+    }
+
+    public Vector3 GetBuildPosition()
+    {
+        return transform.position + positionOffSet;
     }
 
     private void OnMouseDown()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        if (!buildManager.CanBuild)
+        {
+            return;
+        }
         if (tower != null)
         {
             Debug.Log("Can't build there");
             return;
         }
 
-        GameObject towerToBuild = BuildManager.instance.GetTowerToBuild();
-        tower = (GameObject)Instantiate(towerToBuild, transform.position, transform.rotation);
+        buildManager.BuildTowerOn(this);
     }
 
     private void OnMouseEnter()
@@ -35,12 +52,19 @@ public class PlaceTower : MonoBehaviour {
         {
             return;
         }
-        if(!BuildManager.CanBuild)
+        if(!buildManager.CanBuild)
         {
             return;
         }
-        rend.material.color = hoverColor;
-
+        if(buildManager.HasMoney)
+        {
+            rend.material.color = hoverColor;
+        }
+        
+        else
+        {
+            rend.material.color = notEnoughMoneyColor;
+        }
     }
 
     private void OnMouseExit()
