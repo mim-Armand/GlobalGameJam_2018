@@ -21,6 +21,8 @@ public class Entity : MonoBehaviour {
 	protected GameObject healthBar;
 	[SerializeField]
 	private float healthBarHeight;
+	[SerializeField]
+	private AudioSource deathSounds;
 
     protected float health = 100;
 	protected Navigator nav;
@@ -30,7 +32,7 @@ public class Entity : MonoBehaviour {
 		if (canMove) {
 			Move ();
 			SetProperRotation ();
-			healthBar.transform.position = this.transform.position + new Vector3 (0f, healthBarHeight, 0f);
+			healthBar.transform.position = this.transform.position + new Vector3 (0f, healthBarHeight, -.01f);
 		}
 
 		if (health <= 0)
@@ -59,6 +61,12 @@ public class Entity : MonoBehaviour {
     }
 	virtual protected void Die() {
 		Debug.Log ("DEAD");
+		StartCoroutine(DoDeathSounds()) ;
+	}
+
+	// This is different from death and caused by when a unit reaches the player base
+	virtual protected void Despawn() {
+		Debug.Log ("Despawning");
 		GameObject.Destroy (healthBar.gameObject);
 		GameObject.Destroy (this.gameObject);
 	}
@@ -90,5 +98,15 @@ public class Entity : MonoBehaviour {
 		}
 
 		lastPoint = this.transform.position;
+	}
+
+	private IEnumerator DoDeathSounds()
+	{
+		if(deathSounds != null)
+			deathSounds.Play ();
+		
+		yield return new WaitForSeconds(3.0f);
+		GameObject.Destroy (healthBar.gameObject);
+		GameObject.Destroy (this.gameObject);
 	}
 }

@@ -13,7 +13,7 @@ public class WaveSpawner : MonoBehaviour {
 	[SerializeField]
 	private GameObject[] navPoints;
     // Update is called once per frame
-    void Update ()
+    void FixedUpdate ()
     {
         if(countdown <= 0f)
         {
