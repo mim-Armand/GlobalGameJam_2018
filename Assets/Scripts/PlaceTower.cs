@@ -2,29 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceTower : MonoBehaviour
-{
-    //instantiate a copy of the object stored in towerPrefab to create a tower, and store it in tower to manipulate it during the game.
-    public GameObject towerPrefab;
-    private GameObject tower;
+//go with BuildManager script
+public class PlaceTower : MonoBehaviour {
 
-    private bool CanPlaceTower()
+    public Color hoverColor;
+    private GameObject tower;
+    private Renderer rend;
+    private Color startColor;
+
+    private void Start()
     {
-        return tower == null;
+        rend = GetComponent<Renderer>();
+        startColor = rend.material.color;
     }
 
-    //Method to check on what to do with the tower placing 
-    void OnMouseUp()
+    private void OnMouseDown()
     {
-        Debug.Log(" Error");
-        if (CanPlaceTower()) //if tower can be placed 
+        if (tower != null)
         {
-            tower = GameObject.Instantiate(towerPrefab, transform.position, Quaternion.identity);
-            AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-            audioSource.PlayOneShot(audioSource.clip);
-
-            //extra stuff like gold deduction can be added here
+            Debug.Log("Can't build there");
+            return;
         }
+
+        GameObject towerToBuild = BuildManager.instance.GetTowerToBuild();
+        tower = (GameObject)Instantiate(towerToBuild, transform.position, transform.rotation);
+    }
+
+    private void OnMouseEnter()
+    {
+        rend.material.color = hoverColor;
+
+    }
+
+    private void OnMouseExit()
+    {
+        rend.material.color = startColor;
     }
 }
 
