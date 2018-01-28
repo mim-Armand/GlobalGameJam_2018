@@ -11,29 +11,21 @@ public class CameraController : MonoBehaviour
     public float minY = 10f;
     public float maxY = 80f;
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
-        if(Input.GetKeyDown (KeyCode.Escape))
+		if(Input.GetKey("w"))
         {
-            doMovement = !doMovement;
+			transform.Translate(Vector3.up * panSpeed * Time.deltaTime, Space.World);
         }
-        if (doMovement)
+        if (Input.GetKey("s"))
         {
-            return;
+			transform.Translate(Vector3.down * panSpeed * Time.deltaTime, Space.World);
         }
-		if(Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
-        {
-            transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
-        }
-        if (Input.GetKey("s") || Input.mousePosition.y <= Screen.height - panBorderThickness)
-        {
-            transform.Translate(Vector3.back * panSpeed * Time.deltaTime, Space.World);
-        }
-        if (Input.GetKey("d") || Input.mousePosition.y >= Screen.width - panBorderThickness)
+        if (Input.GetKey("d"))
         {
             transform.Translate(Vector3.right * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("a") || Input.mousePosition.y <= Screen.height - panBorderThickness)
+        if (Input.GetKey("a"))
         {
             transform.Translate(Vector3.left * panSpeed * Time.deltaTime, Space.World);
         }
@@ -42,6 +34,6 @@ public class CameraController : MonoBehaviour
         Vector3 pos = transform.position;
         pos.y -= scroll * 1000 * scrollSpeed * Time.deltaTime;
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        transform.position = pos;
+		//transform.position = pos;
     }
 }
