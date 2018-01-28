@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 
 public class WaveSpawner : MonoBehaviour {
-	public GameObject piratePrefab;
+    public Transform piratePrefab;
+    public Transform spawnPoint;
     public float timeBetweenWaves = 10f;
     private float countdown = 2f;
     public Text waveCountdownText;
     private int waveNumber = 0;
-	[SerializeField]
-	private GameObject[] navPoints;
+
     // Update is called once per frame
-    void FixedUpdate ()
+    void Update ()
     {
         if(countdown <= 0f)
         {
@@ -21,7 +21,10 @@ public class WaveSpawner : MonoBehaviour {
             countdown = timeBetweenWaves;
         }
         countdown -= Time.deltaTime;
-        waveCountdownText.text = Mathf.Floor(countdown).ToString();
+
+        countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+
+        waveCountdownText.text = string.Format("{0:00.00}", countdown);
 	}
 
     IEnumerator SpawnWave() //will be called when countdown is 0 to indicate another enemy wave is coming
@@ -39,10 +42,7 @@ public class WaveSpawner : MonoBehaviour {
 
     void SpawnPirate() //spawn pirates at the spawn point indicated on the map
     {
-		GameObject spawnedObject = GameObject.Instantiate (piratePrefab);
-		// we only need to set the position since the thing spawned will take care of that
-		spawnedObject.transform.position = this.transform.position;
-		spawnedObject.GetComponent<Entity> ().SetNavigator (new Navigator (navPoints));
+        Instantiate(piratePrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
 
