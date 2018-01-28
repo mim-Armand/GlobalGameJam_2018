@@ -8,6 +8,7 @@ public class Wifi : TowerBlueprint {
 	void Start () {
 		this.cost = 500;
 		this.prefab = this.gameObject;
+		this.health = this.maxHealth;
 	}
 	
 	// Update is called once per frame
