@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class Splash : MonoBehaviour
 {
-    public Image splashImage;
+	public Image splashImage;
     public string loadLevel;
 	// Use this for initialization
-	IEnumerator Start () {
-        splashImage.canvasRenderer.SetAlpha(0.0f);
-        FadeIn();
-        yield return new WaitForSeconds(2.5f);
-        FadeOut();
-        yield return new WaitForSeconds(2.5f);
+
+	void Start() {
+		StartCoroutine (begin());
+	}
+	private IEnumerator begin () {
+        yield return new WaitForSeconds(20.0f);
         SceneManager.LoadScene(loadLevel);
 	}
 	
