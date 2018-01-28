@@ -29,6 +29,7 @@ public class Entity : MonoBehaviour {
     protected float health = 100;
 	protected Navigator nav;
 	protected Vector2 lastPoint;
+
 	protected float attackTimer = 0.0f;
 
 	void FixedUpdate() {
@@ -40,6 +41,7 @@ public class Entity : MonoBehaviour {
 			
 		if (canAttack && attackTimer > 0.0) {
 			attackTimer -= Time.fixedDeltaTime;
+			//Debug.Log (attackTimer + "Entity");
 		} 
 
 		if (health <= 0)
@@ -64,12 +66,11 @@ public class Entity : MonoBehaviour {
 		Debug.Log(this.gameObject.name + "has launched TakeDamage with " + damage + " damage");
         health -= damage;
 		healthBar.transform.GetChild(0).transform.GetChild(0).GetComponent<Image> ().fillAmount = GetHealthNormalized ();
-        Debug.Log(health);
     }
 	virtual protected void Die() {
 		this.canMove = false;
 		Debug.Log ("DEAD");
-		StartCoroutine(DoDeathSounds()) ;
+		DoDeathSounds ();
 	}
 
 	// This is different from death and caused by when a unit reaches the player base
@@ -108,14 +109,12 @@ public class Entity : MonoBehaviour {
 		lastPoint = this.transform.position;
 	}
 
-	private IEnumerator DoDeathSounds()
+	private void DoDeathSounds()
 	{
 		if (deathSounds != null) {
 			deathSounds.Play ();
 			Debug.Log ("printing death");
 		}
-		
-		yield return new WaitForSeconds(3.0f);
 		GameObject.Destroy (healthBar.gameObject);
 		GameObject.Destroy (this.gameObject);
 	}

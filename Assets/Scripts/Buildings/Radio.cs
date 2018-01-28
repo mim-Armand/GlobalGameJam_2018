@@ -23,14 +23,15 @@ public class Radio : Entity {
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (this.attackTimer <= 0) {
+			//make sure the attack was successful
 			AttackCycle (collider.gameObject);
-			attackTimer = attackDelaySeconds;
 		}
 	}
 
 	private void AttackCycle(GameObject obj) {
 		Entity entity = obj.GetComponent<Entity> ();
 		if (entity != null && entity.GetAffiliation () != this.faction) {
+			attackTimer = attackDelaySeconds;
 			Attacks.ShootStart (projectile, this.transform.GetChild(0).gameObject, entity.gameObject, damage);
 		}
 	}

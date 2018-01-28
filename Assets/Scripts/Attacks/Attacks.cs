@@ -20,4 +20,15 @@ public static class Attacks
 	public static void MeleeAttack(GameObject defender, float damage) {
 		defender.GetComponent<Entity> ().TakeDamage (damage);
 	}
+
+	public static void AoeAttack(GameObject aoe, GameObject attacker, GameObject defender, float damage) {
+		Debug.Log ("AOE spawned");
+		aoe = GameObject.Instantiate(aoe);
+		aoe.transform.position = attacker.transform.position;
+		AOE component = aoe.GetComponent<AOE> ();
+		component.SetDamage(damage);
+		component.SetFaction(attacker.GetComponent<Entity>().GetAffiliation());
+	
+		 
+	}
 }
