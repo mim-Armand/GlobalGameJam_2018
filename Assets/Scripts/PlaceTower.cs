@@ -38,11 +38,12 @@ public class PlaceTower : MonoBehaviour {
         {
             return;
         }
-        if (tower != null)
-        {
-            Debug.Log("Can't build there");
-            return;
-        }
+		//works without it!
+        //if (tower != null)
+        //{
+           // Debug.Log("Can't build there");
+           // return;
+       // }
 
         buildManager.BuildTowerOn(this);
     }

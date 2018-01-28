@@ -13,10 +13,10 @@ public class GameOver : MonoBehaviour {
         {
             return;
         }
-        if() //enter the losing condition here
-        {
-            EndGame();
-        }
+		// //enter the losing condition here
+        //{
+            //EndGame();
+        //}
 	}
 
     void EndGame()
